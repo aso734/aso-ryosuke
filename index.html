@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fixed Image Upload</title>
+</head>
+<body>
+  <h1>Fixed Image Upload</h1>
+
+  <!-- ボタンだけのシンプルなUI -->
+  <button id="uploadButton">Send Fixed Image for Detection</button>
+
+  <!-- 結果表示 -->
+  <div id="result"></div>
+
+  <script>
+    document.getElementById('uploadButton').addEventListener('click', async function () {
+      // 固定画像のパスを指定
+      const imagePath = 'img_pngs/syukatu.jpg'; // 画像の絶対パスまたはURLに変更
+      const blob = await fetch(imagePath).then((res) => res.blob()); // 画像をBlob形式で取得
+
+      // FormDataを作成して画像を添付
+      const formData = new FormData();
+      formData.append('file', blob, 'image.jpg'); // ファイル名を指定
+
+      try {
+        // fetchを使ってリクエストを送信
+        const response = await fetch('http://compreface/api/v1/detection/detect', {
+          method: 'POST',
+          headers: {
+            'x-api-key': '7700b4a7-bd1f-4063-9115-7f125371cf80', // APIキー
+          },
+          body: formData, // 画像データ
+        });
+
+        // サーバーからのレスポンスを処理
+        if (response.ok) {
+          const result = await response.json();
+          document.getElementById('result').textContent = JSON.stringify(result, null, 2);
+        } else {
+          document.getElementById('result').textContent = `Error: ${response.statusText}`;
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('result').textContent = `Error: ${error.message}`;
+      }
+    });
+  </script>
+</body>
+</html>
