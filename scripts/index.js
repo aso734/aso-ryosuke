@@ -30,7 +30,6 @@ const sendImageFile = async () => {
       console.log('サーバーからの応答:', result);
       resultDisplay.textContent = `顔検出結果: ${JSON.stringify(result, null, 2)}`;
     } catch (error) {
-      console.error('エラー:', error);
       resultDisplay.textContent = 'エラーが発生しました。詳細はコンソールを確認してください。';
     }
   };

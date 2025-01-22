@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', async (event: Event) => {
     const myButton2 = document.getElementById('button2') as HTMLButtonElement;
     const resultArea = document.getElementById('result') as HTMLElement;
 
-    // ドラッグオーバー時のスタイル変更
     const handleDragOver = (e: DragEvent): void => {
         e.preventDefault();
         dropArea.classList.add('hover');
